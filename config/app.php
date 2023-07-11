@@ -10,7 +10,7 @@ return [
         'entity' => Json::class,
     ],
     'to' => [
-        'folder' => __DIR__ . '/../storage/from/',
+        'folder' => __DIR__ . '/../storage/to/',
         'entity' => Html::class,
     ],
     'parser' => JsonParserService::class,

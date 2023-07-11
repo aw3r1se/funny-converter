@@ -8,4 +8,6 @@ use App\Traits\LinkableTrait;
 class Image extends Element implements HasLink
 {
     use LinkableTrait;
+
+    protected static string $tag = 'img';
 }

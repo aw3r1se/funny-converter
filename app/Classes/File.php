@@ -7,6 +7,7 @@ use App\Exceptions\InvalidFileType;
 abstract class File
 {
     protected ?string $path;
+    protected ?string $name;
     protected ?string $contents;
     protected static ?string $extension;
     protected ?Element $root;
@@ -22,11 +23,25 @@ abstract class File
             }
 
             $this->path = $path;
+            $this->name = basename($path);
             $this->contents = file_get_contents($path);
         }
     }
 
     abstract public function render(): static;
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $name = preg_replace('#\.\w+$#iu', '', $name);
+        $this->name = "$name." . static::$extension;
+
+        return $this;
+    }
 
     public function traverseTree(callable $callback): static
     {
@@ -37,7 +52,9 @@ abstract class File
 
     protected function traverseTreeRecursive(Element $element, callable $callback): static
     {
-        $callback($element);
+        $has_children = (bool)count($element->getChildren());
+        $callback($element, $has_children);
+
         foreach ($element->getChildren() as $child) {
             $this->traverseTreeRecursive($child, $callback);
         }
@@ -50,7 +67,7 @@ abstract class File
         return static::$extension;
     }
 
-    public function getRoot():?Element
+    public function getRoot(): ?Element
     {
         return $this->root;
     }

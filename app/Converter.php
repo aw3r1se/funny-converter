@@ -51,10 +51,8 @@ class Converter
 
     public function store(): static
     {
-//        $this->file
-//            ->save($this->to['folder']);
-
-        echo 'store';
+        $this->file
+            ->save($this->to['folder'] . $this->file->getName());
 
         return $this;
     }

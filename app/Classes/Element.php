@@ -21,6 +21,11 @@ abstract class Element
         $this->dom_node = new DOMElement(static::$tag);
     }
 
+    public function getDomNode(): DOMElement
+    {
+        return $this->dom_node;
+    }
+
     //abstract function render(): static;
 
     public function getChildren(): array

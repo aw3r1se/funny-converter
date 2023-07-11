@@ -8,4 +8,6 @@ use App\Traits\TextableTrait;
 class Container extends Element implements HasText
 {
     use TextableTrait;
+
+    protected static string $tag = 'div';
 }

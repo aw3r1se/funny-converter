@@ -3,7 +3,6 @@
 namespace App\Classes;
 
 use DOMDocument;
-use DOMElement;
 
 class Html extends File
 {
@@ -11,12 +10,26 @@ class Html extends File
 
     public function render(): static
     {
-        $content = new DOMDocument();
-        $this->traverseTree(function (Element $element) use ($content) {
-            //
+        $root = null;
+        $parent = null;
+
+        $this->traverseTree(function (Element $element, bool $has_children) use (&$root, &$parent) {
+            $element = $element->getDomNode();
+            $parent = $parent ?? $element;
+
+            if (empty($root)) {
+                $root = new DOMDocument();
+                $root->appendChild($parent);
+                return;
+            }
+
+            $parent->appendChild($element);
+            if ($has_children) {
+                $parent = $element;
+            }
         });
 
-        $content->saveHTMLFile('123123');
+        $this->contents = $root->saveHTML();
 
         return $this;
     }

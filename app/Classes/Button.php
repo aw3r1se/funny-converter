@@ -11,4 +11,6 @@ class Button extends Element implements HasText, HasLink
 {
     use TextableTrait;
     use LinkableTrait;
+
+    protected static string $tag = 'button';
 }

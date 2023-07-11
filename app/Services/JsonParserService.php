@@ -53,10 +53,9 @@ class JsonParserService implements ParserServiceInterface
             ->fillTree()
             ->getRoot();
 
-        $html = new Html();
-        $html->setRoot($root)
+        return (new Html())
+            ->setName($this->file->getName())
+            ->setRoot($root)
             ->render();
-
-        return $html;
     }
 }
