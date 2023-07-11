@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+
+require_once 'vendor/autoload.php';
+
+use App\Converter;
+
+$config = require 'config/app.php';
+(new Converter($config))
+    ->run($argv[1] ?? null);
